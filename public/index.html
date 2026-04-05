@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta name="generator" content="Hugo 0.159.2"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DVD Screensaver</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+    }
+
+    #dvd {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: auto;
+      user-select: none;
+      pointer-events: none;
+      will-change: transform;
+    }
+  </style>
+</head>
+<body>
+  
+  
+    <img id="dvd" src="/fried-fish-sandwich-hanks.gif" alt="Bouncing DVD GIF">
+  
+
+  <script>
+    (function () {
+      var el = document.getElementById("dvd");
+      if (!el) return;
+
+      var x = 0;
+      var y = 0;
+      var vx = 220;
+      var vy = 220;
+      var lastTime = null;
+
+      function tick(ts) {
+        var w = el.offsetWidth;
+        var h = el.offsetHeight;
+        var maxX = window.innerWidth - w;
+        var maxY = window.innerHeight - h;
+
+        if (lastTime === null) {
+          lastTime = ts;
+        }
+
+        
+        var dt = Math.min((ts - lastTime) / 1000, 0.05);
+        lastTime = ts;
+
+        x += vx * dt;
+        y += vy * dt;
+
+        if (x <= 0) {
+          x = 0;
+          vx = Math.abs(vx);
+        } else if (x >= maxX) {
+          x = maxX;
+          vx = -Math.abs(vx);
+        }
+
+        if (y <= 0) {
+          y = 0;
+          vy = Math.abs(vy);
+        } else if (y >= maxY) {
+          y = maxY;
+          vy = -Math.abs(vy);
+        }
+
+        el.style.transform = "translate(" + x + "px, " + y + "px)";
+        requestAnimationFrame(tick);
+      }
+
+      if (el.complete) {
+        requestAnimationFrame(tick);
+      } else {
+        el.addEventListener("load", function () {
+          requestAnimationFrame(tick);
+        }, { once: true });
+      }
+
+      window.addEventListener("resize", function () {
+        x = Math.min(x, Math.max(0, window.innerWidth - el.offsetWidth));
+        y = Math.min(y, Math.max(0, window.innerHeight - el.offsetHeight));
+      });
+
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) {
+          lastTime = null;
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
