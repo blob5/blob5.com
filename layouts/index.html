@@ -22,6 +22,9 @@
       transform-origin: center center;
       will-change: transform;
       user-select: none;
+      -webkit-user-select: none;
+      -webkit-user-drag: none;
+      -webkit-tap-highlight-color: transparent;
       pointer-events: auto;
       cursor: pointer;
     }
@@ -161,6 +164,10 @@
         updateConfetti(dt);
         requestAnimationFrame(tick);
       }
+
+      el.addEventListener('touchstart', function (e) {
+        e.preventDefault();
+      });
 
       el.addEventListener('dragstart', function (e) {
         e.preventDefault();
