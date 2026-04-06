@@ -167,7 +167,10 @@
 
       el.addEventListener('touchstart', function (e) {
         e.preventDefault();
-      });
+        targetScale = 1.6;
+        setTimeout(function () { targetScale = 1; }, 240);
+        boost += 0.5;
+      }, { passive: false });
 
       el.addEventListener('dragstart', function (e) {
         e.preventDefault();
